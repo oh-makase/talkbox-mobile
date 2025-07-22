@@ -1,0 +1,120 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>7/27 🌴🍷 토크 주제 박스</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            color: #2c3e50;
+            font-size: 24px;
+        }
+        .btn {
+            margin: 10px 5px;
+            padding: 12px 20px;
+            font-size: 16px;
+            background-color: #1e90ff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 80%;
+            max-width: 300px;
+        }
+        #question-page {
+            display: none;
+        }
+        #question {
+            font-size: 20px;
+            color: #34495e;
+            margin-top: 40px;
+            min-height: 60px;
+        }
+        #controls {
+            margin-top: 30px;
+        }
+        .control-btn {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #ff7675;
+            color: white;
+            border: none;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+<body>
+<div class="container" id="main-page">
+    <h1>7/27 🌴🍷 토크 주제 박스</h1>
+    <button class="btn" onclick="start('취미')">취미</button>
+    <button class="btn" onclick="start('연애')">연애</button>
+    <button class="btn" onclick="start('인생 가치관')">인생 가치관</button>
+    <button class="btn" onclick="start('밸런스 게임')">밸런스 게임</button>
+</div>
+
+<div class="container" id="question-page">
+    <h1 id="category-title"></h1>
+    <div id="question"></div>
+    <div id="controls">
+        <button class="control-btn" onclick="nextQuestion()">다음 질문 ▶</button>
+        <button class="control-btn" onclick="goHome()">주제 선택으로 돌아가기</button>
+    </div>
+</div>
+
+<script>
+    const questions = {
+        "취미": [...Array(34)].map((_, i) => `취미 질문 ${i+1}`),
+        "연애": [...Array(37)].map((_, i) => `연애 질문 ${i+1}`),
+        "인생 가치관": [...Array(31)].map((_, i) => `인생 가치관 질문 ${i+1}`),
+        "밸런스 게임": [...Array(25)].map((_, i) => `밸런스 게임 질문 ${i+1}`)
+    };
+
+    let current = [], index = 0;
+
+    function shuffle(arr) {
+        for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+    }
+
+    function start(category) {
+        current = shuffle([...questions[category]]);
+        index = 0;
+        document.getElementById("main-page").style.display = "none";
+        document.getElementById("question-page").style.display = "block";
+        document.getElementById("category-title").innerText = category;
+        document.getElementById("question").innerText = current[index];
+    }
+
+    function nextQuestion() {
+        index++;
+        if (index < current.length) {
+            document.getElementById("question").innerText = current[index];
+        } else {
+            document.getElementById("question").innerText = "🎉 질문이 끝났습니다!";
+        }
+    }
+
+    function goHome() {
+        document.getElementById("question-page").style.display = "none";
+        document.getElementById("main-page").style.display = "block";
+    }
+</script>
+</body>
+</html>
